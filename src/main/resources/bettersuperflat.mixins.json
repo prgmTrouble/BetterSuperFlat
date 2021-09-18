@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.pixeils.bettersuperflat.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "GeneratorOptionsMixin"
+  ],
+  "client": [
+    "GeneratorTypeAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
