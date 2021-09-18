@@ -32,28 +32,27 @@ public class ChunkGenerator extends NoiseChunkGenerator {
     private final long seed;
 
     public static final Codec<ChunkGenerator> CODEC =
-            RecordCodecBuilder.create(
-                    (instance) ->
-                            instance
-                                    .group(
-                                            BiomeSource.CODEC
-                                                    .fieldOf("biome_source")
-                                                    .forGetter(ChunkGenerator::getBiomeSource),
-                                            Codec.LONG
-                                                    .fieldOf("seed")
-                                                    .stable()
-                                                    .forGetter(ChunkGenerator::getSeed),
-                                            ChunkGeneratorSettings.REGISTRY_CODEC
-                                                    .fieldOf("settings")
-                                                    .forGetter(ChunkGenerator::getSettings))
-                                    .apply(instance, instance.stable(ChunkGenerator::new)));
+        RecordCodecBuilder.create(
+            (instance) ->
+                instance
+                    .group(
+                        BiomeSource.CODEC
+                            .fieldOf("biome_source")
+                            .forGetter(ChunkGenerator::getBiomeSource),
+                        Codec.LONG
+                            .fieldOf("seed")
+                            .stable()
+                            .forGetter(ChunkGenerator::getSeed),
+                        ChunkGeneratorSettings.REGISTRY_CODEC
+                            .fieldOf("settings")
+                            .forGetter(ChunkGenerator::getSettings)
+                    )
+                    .apply(instance, instance.stable(ChunkGenerator::new))
+        );
 
-    public ChunkGenerator(
-            BiomeSource biomeSource, long seed, Supplier<ChunkGeneratorSettings> settings) {
-
+    public ChunkGenerator(BiomeSource biomeSource,long seed,Supplier<ChunkGeneratorSettings> settings) {
         super(biomeSource, seed, settings);
         this.seed = seed;
-
     }
 
 
@@ -83,27 +82,27 @@ public class ChunkGenerator extends NoiseChunkGenerator {
 
         if (region.getDimension().isNatural()) {
             BlockPos pos =
-                    new BlockPos(
+                new BlockPos(
                     region.getCenterPos().getStartX(),
                     region.getHeight() - 256,
                     region.getCenterPos().getStartZ());
             generateSpawnPlatformInBox(
-                    region,
-                    pos,
-                    new BlockBox(
-                            chunk.getPos().getStartX(),
-                            0,
-                            chunk.getPos().getStartZ(),
-                            chunk.getPos().getStartX() + 15,
-                            region.getHeight(),
-                            chunk.getPos().getStartZ() + 15));
-            }
+                region,
+                pos,
+                new BlockBox(
+                    chunk.getPos().getStartX(),
+                    0,
+                    chunk.getPos().getStartZ(),
+                    chunk.getPos().getStartX() + 15,
+                    region.getHeight(),
+                    chunk.getPos().getStartZ() + 15));
         }
+    }
 
 
     @Override
     public CompletableFuture<Chunk> populateNoise(
-            Executor executor, StructureAccessor accessor, Chunk chunk) {
+        Executor executor, StructureAccessor accessor, Chunk chunk) {
         return CompletableFuture.completedFuture(chunk);
     }
 
@@ -126,31 +125,31 @@ public class ChunkGenerator extends NoiseChunkGenerator {
     }
 
     protected static void placeRelativeBlockInBox(
-            WorldAccess world,
-            BlockState block,
-            BlockPos referencePos,
-            int x,
-            int y,
-            int z,
-            BlockBox box) {
+        WorldAccess world,
+        BlockState block,
+        BlockPos referencePos,
+        int x,
+        int y,
+        int z,
+        BlockBox box) {
         BlockPos blockPos =
-                new BlockPos(referencePos.getX() + x, referencePos.getY() + y, referencePos.getZ() + z);
+            new BlockPos(referencePos.getX() + x, referencePos.getY() + y, referencePos.getZ() + z);
         if (box.contains(blockPos)) {
             world.setBlockState(blockPos, block, 2);
         }
     }
 
     protected static void fillRelativeBlockInBox(
-            WorldAccess world,
-            BlockState block,
-            BlockPos referencePos,
-            int startX,
-            int startY,
-            int startZ,
-            int endX,
-            int endY,
-            int endZ,
-            BlockBox box) {
+        WorldAccess world,
+        BlockState block,
+        BlockPos referencePos,
+        int startX,
+        int startY,
+        int startZ,
+        int endX,
+        int endY,
+        int endZ,
+        BlockBox box) {
         for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
                 for (int z = startZ; z <= endZ; z++) {
@@ -162,15 +161,15 @@ public class ChunkGenerator extends NoiseChunkGenerator {
 
     protected static void generateSpawnPlatformInBox(ServerWorldAccess world, BlockPos pos, BlockBox box) {
         fillRelativeBlockInBox(
-                world, Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState(), pos, 1,0,1,14,0,14,box);
+            world, Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState(), pos, 1, 0, 1, 14, 0, 14, box);
         fillRelativeBlockInBox(
-                world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 1,0,0,15,0,0,box);
+            world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 1, 0, 0, 15, 0, 0, box);
         fillRelativeBlockInBox(
-                world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 0,0,0,0,0,15,box);
+            world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 0, 0, 0, 0, 0, 15, box);
         fillRelativeBlockInBox(
-                world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 15,0,1,15,0,15,box);
+            world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 15, 0, 1, 15, 0, 15, box);
         fillRelativeBlockInBox(
-                world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 1,0,15,14,0,15,box);
+            world, Blocks.WHITE_STAINED_GLASS.getDefaultState(), pos, 1, 0, 15, 14, 0, 15, box);
 
     }
 }
