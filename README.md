@@ -9,7 +9,7 @@ If you do not have Fabric API it will show up as `generator.BetterSuperFlat` ins
 Does the following:
 
 - Void in all three dimensions
-- Has all the biomes and structures of vanilla generation included
+- Has all the biomes and structure bounding boxes of vanilla generation included
 - Overworld generates glass floor with outlines for chunks
   
   ![floor](screenshots/Floor.png?raw=true "Floor")
