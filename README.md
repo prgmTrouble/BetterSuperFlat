@@ -1,4 +1,4 @@
-###Better Super Flat
+### Better Super Flat
 
 Usage:
 Select the `BetterSuperFlat`generation option in the create world screen.
@@ -12,7 +12,7 @@ Does the following:
 - Has all the biomes and structures of vanilla generation included
 - Overworld generates glass floor with outlines for chunks
   
-  ![floor](screenshots/floor.png?raw=true "Floor")
+  ![floor](screenshots/Floor.png?raw=true "Floor")
 
 Problems:
 - Currently doesnt change the gamerules to default to good ones
